@@ -13,37 +13,66 @@ function computerPlay() {
 
 function playRound(playerSelection, computerSelection) {
   playerSelection = playerSelection.toLowerCase();
+  let playerWins = 0
 
   if (playerSelection === "rock") {
     switch (computerSelection) {
       case "Rock":
-        return "It's a tie! Both chose rock."
+        console.log("It's a tie! Both chose rock.");
+        break;
       case "Paper":
-        return "You lose! Paper beats rock!"
+        console.log("You lose! Paper beats rock!");
+        break;
       case "Scissors":
-        return "You win! Rock beats scissors!"
+        console.log("You win! Rock beats scissors!");
+        playerWins++;
+        break;
     }
   } else if (playerSelection === "paper") {
     switch (computerSelection) {
       case "Rock":
-        return "You win! Paper beats rock!"
+        console.log("You win! Paper beats rock!");
+        playerWins++;
+        break;
       case "Paper":
-        return "It's a tie! Both chose paper."
+        console.log("It's a tie! Both chose paper.");
+        break;
       case "Scissors":
-        return "You lose! Scissors beats paper!"
+        console.log("You lose! Scissors beats paper!");
+        break;
     }
   } else if (playerSelection === "scissors") {
     switch (computerSelection) {
       case "Rock":
-        return "You lose! Rock beats scissors!"
+        console.log("You lose! Rock beats scissors!");
+        break;
       case "Paper":
-        return "You win! Scissors beats paper!"
+        console.log("You win! Scissors beats paper!");
+        playerWins++;
+        break;
       case "Scissors":
-        return "It's a tie! Both chose scissors."
+        console.log("It's a tie! Both chose scissors.");
+        break;
     }
+  }
+  return playerWins;
+}
+
+function game() {
+  let playerWins = 0
+  i = 1
+  while (i <= 5) {
+    playerSelection = window.prompt("Please input a move", "");
+    computerSelection = computerPlay();
+    playerWins += playRound(playerSelection, computerSelection)
+    i++;
+  }
+
+  if (playerWins > 2) {
+    console.log("Congratulations, you win!")
+  } else {
+    console.log("Aww! You lost :(")
   }
 }
 
-// const playerSelection = "roCk";
-// const computerSelection = computerPlay();
-// console.log(playRound(playerSelection, computerSelection));
+game()
