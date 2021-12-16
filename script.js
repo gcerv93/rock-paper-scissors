@@ -5,6 +5,8 @@ const buttons = document.querySelectorAll('button');
 const results = document.querySelector('.results');
 const playerMoveDiv = document.createElement('div');
 const computerMoveDiv = document.createElement('div');
+const roundResults = document.createElement('div');
+const scoreDiv = document.createElement('div');
 
 buttons.forEach((button => {
   button.addEventListener('click', updateDisplay);
@@ -17,9 +19,13 @@ function updateDisplay(e) {
   playerMoveDiv.textContent = `Player move is ${playerMove.toUpperCase()}.`;
   results.appendChild(playerMoveDiv);
 
-  computerMoveDiv.textContent = `Computer move is ${computerMove.toUpperCase()}.`
+  computerMoveDiv.textContent = `Computer move is ${computerMove.toUpperCase()}.`;
   results.appendChild(computerMoveDiv);
   playRound(playerMove, computerMove);
+
+  scoreDiv.textContent = `Player Score: ${playerWins} Computer Score: ${computerWins}`;
+  results.appendChild(scoreDiv);
+  checkWinner();
 }
 
 function computerPlay() {
@@ -37,57 +43,65 @@ function computerPlay() {
 
 function playRound(playerSelection, computerSelection) {
   playerSelection = playerSelection.toLowerCase();
-  let playerWins = 0
 
   if (playerSelection === "rock") {
     switch (computerSelection) {
       case "Rock":
-        console.log("It's a tie! Both chose rock.");
+        roundResults.textContent = "It's a tie! Both chose ROCK.";
         break;
       case "Paper":
-        console.log("You lose! Paper beats rock!");
+        roundResults.textContent = "You lose! PAPER beats ROCK!";
+        computerWins++;
         break;
       case "Scissors":
-        console.log("You win! Rock beats scissors!");
+        roundResults.textContent = "You win! ROCK beats SCISSORS!";
         playerWins++;
         break;
     }
   } else if (playerSelection === "paper") {
     switch (computerSelection) {
       case "Rock":
-        console.log("You win! Paper beats rock!");
+        roundResults.textContent = "You win! PAPER beats ROCK!";
         playerWins++;
         break;
       case "Paper":
-        console.log("It's a tie! Both chose paper.");
+        roundResults.textContent = "It's a tie! Both chose PAPER.";
         break;
       case "Scissors":
-        console.log("You lose! Scissors beats paper!");
+        roundResults.textContent = "You lose! SCISSORS beats PAPER!";
+        computerWins++;
         break;
     }
   } else if (playerSelection === "scissors") {
     switch (computerSelection) {
       case "Rock":
-        console.log("You lose! Rock beats scissors!");
+        roundResults.textContent = "You lose! ROCK beats SCISSORS!";
+        computerWins++;
         break;
       case "Paper":
-        console.log("You win! Scissors beats paper!");
+        roundResults.textContent = "You win! SCISSORS beats PAPER!";
         playerWins++;
         break;
       case "Scissors":
-        console.log("It's a tie! Both chose scissors.");
+        roundResults.textContent = "It's a tie! Both chose SCISSORS.";
         break;
     }
   }
-  return playerWins;
+  results.appendChild(roundResults);
 }
 
-function game() {
-  let playerWins = 0
+function checkWinner() {
+  if (playerWins >= 5) {
+    removeAllChildNodes(results);
+    results.textContent = "Congratulations!! You win!"
+  } else if (computerWins >= 5) {
+    removeAllChildNodes(results);
+    results.textContent = "Awww, you lost!"
+  }
+}
 
-  if (playerWins > 2) {
-    console.log("Congratulations, you win!")
-  } else {
-    console.log("Aww! You lost :(")
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
   }
 }
