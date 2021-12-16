@@ -1,3 +1,27 @@
+let playerWins = 0
+let computerWins = 0
+
+const buttons = document.querySelectorAll('button');
+const results = document.querySelector('.results');
+const playerMoveDiv = document.createElement('div');
+const computerMoveDiv = document.createElement('div');
+
+buttons.forEach((button => {
+  button.addEventListener('click', updateDisplay);
+}))
+
+function updateDisplay(e) {
+  playerMove = e.target.classList.value;
+  computerMove = computerPlay();
+
+  playerMoveDiv.textContent = `Player move is ${playerMove.toUpperCase()}.`;
+  results.appendChild(playerMoveDiv);
+
+  computerMoveDiv.textContent = `Computer move is ${computerMove.toUpperCase()}.`
+  results.appendChild(computerMoveDiv);
+  playRound(playerMove, computerMove);
+}
+
 function computerPlay() {
   let compMoveNum = Math.floor((Math.random() * 3) + 1);
 
@@ -60,13 +84,6 @@ function playRound(playerSelection, computerSelection) {
 
 function game() {
   let playerWins = 0
-  i = 1
-  while (i <= 5) {
-    playerSelection = window.prompt("Please input a move", "");
-    computerSelection = computerPlay();
-    playerWins += playRound(playerSelection, computerSelection)
-    i++;
-  }
 
   if (playerWins > 2) {
     console.log("Congratulations, you win!")
@@ -74,5 +91,3 @@ function game() {
     console.log("Aww! You lost :(")
   }
 }
-
-game()
